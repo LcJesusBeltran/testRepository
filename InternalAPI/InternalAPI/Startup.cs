@@ -31,6 +31,23 @@ namespace InternalAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "InternalAPI", Version = "v1" });
+
+                //Configuacion de seguridad oauth
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        ClientCredentials = new OpenApiOAuthFlow 
+                        {
+                           TokenUrl = new Uri("https://localhost:44363/Token"),
+                           Scopes = new Dictionary<string, string>
+                           {
+                               {"api","API"}
+                           }
+                        }
+                    }
+                }); 
             });
         }
 
